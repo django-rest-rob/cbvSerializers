@@ -7,8 +7,16 @@ from rest_framework.views import APIView
 from django.http import Http404
 
 from rest_framework import generics, mixins
+from rest_framework import viewsets
 
 # Create your views here.
+# WAY FOUR: Using VIEWSETS
+# ONLY 1 Class will implement both KEY and NON-KEY operations
+class StudentViewSet(viewsets.ModelViewSet):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+"""
 # WAY THREE: Using GENERICS
 # 1. CBV for NON-PK operations
 class StudentList(generics.ListCreateAPIView):
@@ -19,7 +27,7 @@ class StudentList(generics.ListCreateAPIView):
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-
+"""
 
 """
 # WAY TWO:
