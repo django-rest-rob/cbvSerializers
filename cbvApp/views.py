@@ -6,7 +6,40 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.http import Http404
 
+from rest_framework import generics, mixins
+
 # Create your views here.
+# 1. CBV for NON-PK operations
+class StudentList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    # GET - get all
+    def get(self, request):
+        return self.list(request)
+
+    # POST - create
+    def post(self, request):
+        return self.create(request)
+
+# 2. CBV for PK operations
+class StudentDetail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.DestroyModelMixin,generics.GenericAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+    # GET - get single
+    def get(self, request, pk):
+        return self.retrieve(request, pk)
+
+    # PUT - update single
+    def put(self, request, pk):
+        return self.update(request, pk)
+
+    # DELETE - delete single
+    def delete(self, request, pk):
+        return self.destroy(request, pk)
+
+"""
 # 1. CBV for NON-PK operations
 class StudentList(APIView):
     # GET
@@ -57,7 +90,7 @@ class StudentDetail(APIView):
         student = self.get_object(pk)
         student.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
+"""
 
 
 
