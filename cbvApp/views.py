@@ -8,13 +8,18 @@ from django.http import Http404
 
 from rest_framework import generics, mixins
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination
 
 # Create your views here.
+class StudentPagination(PageNumberPagination):
+    page_size = 3
+
 # WAY FOUR: Using VIEWSETS
 # ONLY 1 Class will implement both KEY and NON-KEY operations
 class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+    pagination_class = StudentPagination
 
 """
 # WAY THREE: Using GENERICS
