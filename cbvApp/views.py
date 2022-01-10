@@ -9,6 +9,20 @@ from django.http import Http404
 from rest_framework import generics, mixins
 
 # Create your views here.
+# WAY THREE: Using GENERICS
+# 1. CBV for NON-PK operations
+class StudentList(generics.ListCreateAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+# 2. CBV for PK operations
+class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+"""
+# WAY TWO:
 # 1. CBV for NON-PK operations
 class StudentList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
     queryset = Student.objects.all()
@@ -38,8 +52,10 @@ class StudentDetail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,mixins.Des
     # DELETE - delete single
     def delete(self, request, pk):
         return self.destroy(request, pk)
+"""
 
 """
+#WAY ONE:
 # 1. CBV for NON-PK operations
 class StudentList(APIView):
     # GET
